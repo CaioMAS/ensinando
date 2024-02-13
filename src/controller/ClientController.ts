@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ClientUseCase } from "../use-case/ClientUseCase";
+import { BaseError } from "../errors/BaseError";
 
 
 export class ClientController {
@@ -23,13 +24,12 @@ export class ClientController {
 
             return response.json(result)
         } catch (error: any) {
-            if (error.message === 'Cliente já existe') {
-                return response.status(404).json({ error: 'Cliente já existe' })
+            if (error instanceof BaseError) {
+                return response.status(error.code).json({ error: error.message })
             } else {
                 return response.status(500).json({ error: 'Erro Interno do Servidor' });
             }
         }
-
 
     }
 

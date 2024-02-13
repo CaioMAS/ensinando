@@ -1,3 +1,4 @@
+import { BaseError } from "../errors/BaseError";
 import { ClientRepository } from "../repositories/ClientRepository";
 import { IClient } from "../types/interfaces/IClient";
 
@@ -8,7 +9,7 @@ export class ClientUseCase {
         const clientExist = await clientRepository.findClient(object.cpf)
 
         if(clientExist) {
-            throw new Error('Cliente já existe')
+            throw new BaseError(404, 'Cliente já existe')
         }
 
         const client = await clientRepository.createClient(object)
