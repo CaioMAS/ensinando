@@ -23,10 +23,10 @@ export class ClientController {
             })
 
             return response.json(result)
-        } catch (error: any) {
-            if (error instanceof BaseError) {
-                return response.status(error.code).json({ error: error.message })
-            } else {
+        } catch (error: any) {            
+            if (error.message === "Cliente já existe") {                
+                return response.status(404).json({ error: "Cliente já existe" })
+            } else {                
                 return response.status(500).json({ error: 'Erro Interno do Servidor' });
             }
         }
