@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { ClientUseCase } from "../use-case/ClientUseCase";
-import { BaseError } from "../errors/BaseError";
+import { ClientAlreadyExistsError } from "../errors/ClientAlreadyExistsError";
 
 
 export class ClientController {
@@ -23,11 +23,14 @@ export class ClientController {
             })
 
             return response.json(result)
-        } catch (error: any) {            
-            if (error.message === "Cliente já existe") {                
+        } catch (error: any) {
+            
+            console.log(error instanceof ClientAlreadyExistsError)
+            console.log("Tipo de erro:", error.constructor.name);
+            if (error instanceof ClientAlreadyExistsError) {
                 return response.status(404).json({ error: "Cliente já existe" })
-            } else {                
-                return response.status(500).json({ error: 'Erro Interno do Servidor' });
+            } else {
+                return response.status(500).json({ error: "Erro Interno do Servidor" })
             }
         }
 
