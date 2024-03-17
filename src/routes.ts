@@ -14,5 +14,6 @@ routes.post('/client', clientController.createClient)
 //clerk
 routes.post('/createUser', clerkController.createUser)
 routes.get('/listUser', clerkController.listUser)
+routes.get('/loginUser', clerkController.loginUser)
 
 export {routes}
